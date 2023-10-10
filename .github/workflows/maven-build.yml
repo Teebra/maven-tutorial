@@ -28,6 +28,10 @@ jobs:
     - name: Build with Maven
       run: mvn clean install
       
-    - name: Run Tests
-      run: mvn test # Adjust this command based on your project's test configuration
+    - name: Upload HTML Table to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: artefact
+          path: |
+            target/*.jar
       
