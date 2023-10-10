@@ -34,10 +34,16 @@ jobs:
         name: artefact
         path: |
           target/*.jar
-          
-    - name: SonarQube Scan
-      uses: sonarsource/sonarqube-scan-action@master
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+    - name: Scan JAR file with SonarQube
+        uses: SonarSource/sonarqube-scan-action@v7
+        with:
+          serverUrl: ${{ secrets.SONAR_HOST_URL }}
+          token: ${{ secrets.SONAR_TOKEN }}
+          organization: sonartest
+          projectKey: sonartest
+          sonarScanner: sonar-scanner-cli-4.7.0.2747.zip
+          additionalProperties: |-
+            sonar.language=java
+            sonar.sources=src/main/java
       
