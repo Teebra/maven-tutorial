@@ -48,4 +48,5 @@ jobs:
           mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.projectKey=sonartest
 
           # Show SonarQube analysis result in the console
+          echo sonar-result-print
           cat target/sonar/report-task.txt
