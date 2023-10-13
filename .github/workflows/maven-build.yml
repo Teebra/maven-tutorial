@@ -50,3 +50,8 @@ jobs:
           # Show SonarQube analysis result in the console
           echo sonar-result-print
           cat target/sonar/report-task.txt
+      
+      - name: Get SonarQube results in JSON
+        run: |
+          SONAR_RESULTS_JSON=$(curl -s -H "Authorization: Bearer $SONAR_TOKEN" "$SONAR_HOST_URL/api/projects/key/my-project/search?ps=10000")
+          echo "SonarQube results in JSON: $SONAR_RESULTS_JSON" >> $GITHUB_OUTPUT
