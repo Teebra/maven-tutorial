@@ -4,20 +4,20 @@ on:
   pull_request:
     branches:
       - '*'
-
+  
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: phwt/sonarqube-quality-gate-action@v1.4.1
+      - uses: phwt/sonarqube-quality-gate-action@v1
         id: quality-gate-check
         with:
-          sonar-project-key: ${{ secrets.SONAR_PROJECT_KEYY }}
+          sonar-project-key: ${{ secrets.SONAR_PROJECT_KEY }}
           sonar-host-url: ${{ secrets.SONAR_HOST_URL }}
-          sonar-token: ${{ secrets.SONAR_TOKENN }}
+          sonar-token: ${{ secrets.SONAR_TOKEN }}
           github-token: ${{ secrets.PAT_TOKEN }}
-          #branch: false # Optional input
+          branch: false # Optional input
 
       - name: Output result
         run: |
