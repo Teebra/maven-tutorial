@@ -55,21 +55,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
-          mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.projectKey=sonartest -Dsonar.report.json.path=target/sonar/report.json
-
-          # Extract information from report-task.txt
-          projectKey=$(grep -oP 'projectKey=\K[^\n]*' target/sonar/report-task.txt)
-          serverUrl=$(grep -oP 'serverUrl=\K[^\n]*' target/sonar/report-task.txt)
-          serverVersion=$(grep -oP 'serverVersion=\K[^\n]*' target/sonar/report-task.txt)
-          dashboardUrl=$(grep -oP 'dashboardUrl=\K[^\n]*' target/sonar/report-task.txt)
-          ceTaskId=$(grep -oP 'ceTaskId=\K[^\n]*' target/sonar/report-task.txt)
-          ceTaskUrl=$(grep -oP 'ceTaskUrl=\K[^\n]*' target/sonar/report-task.txt)
-
-          # Create a JSON object with the extracted information
-          result_json="{\"projectKey\":\"$projectKey\",\"serverUrl\":\"$serverUrl\",\"serverVersion\":\"$serverVersion\",\"dashboardUrl\":\"$dashboardUrl\",\"ceTaskId\":\"$ceTaskId\",\"ceTaskUrl\":\"$ceTaskUrl\"}"
-
-          # Save the JSON object to a file
-          echo $result_json > sonar_result.json
+          mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.projectKey=sonartest
 
           # Show SonarQube analysis result in the console
-          cat sonar_result.json
+          echo sonar-result-print
+          cat target/sonar/report-task.txt > sonar-report.json
