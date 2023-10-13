@@ -46,3 +46,6 @@ jobs:
         run: |
           mvn clean install
           mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.8:sonar -Dsonar.projectKey=sonartest -Dsonar.analysis.mode=preview
+
+          # Show SonarQube analysis result in the console
+          cat target/sonar/report-task.txt
