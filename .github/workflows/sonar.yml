@@ -17,7 +17,7 @@ jobs:
           sonar-host-url: ${{ secrets.SONAR_HOST_URL }}
           sonar-token: ${{ secrets.SONAR_TOKENN }}
           github-token: ${{ secrets.PAT_TOKEN }}
-          branch: false # Optional input
+          #branch: false # Optional input
 
       - name: Output result
         run: |
