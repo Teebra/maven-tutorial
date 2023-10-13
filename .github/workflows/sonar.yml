@@ -10,14 +10,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: phwt/sonarqube-quality-gate-action@v1
+      - uses: phwt/sonarqube-quality-gate-action@v1.4.1
         id: quality-gate-check
         with:
           sonar-project-key: ${{ secrets.SONAR_PROJECT_KEYY }}
           sonar-host-url: ${{ secrets.SONAR_HOST_URL }}
           sonar-token: ${{ secrets.SONAR_TOKENN }}
           github-token: ${{ secrets.PAT_TOKEN }}
-          #branch: main # Optional input
+          branch: false # Optional input
 
       - name: Output result
         run: |
