@@ -56,8 +56,8 @@ jobs:
             -Dsonar.analysis.mode=publish
             -Dsonar.dynamicAnalysis=reuseReports
             -Dsonar.verbose=true
-            -Dsonar.sarifReportPaths
-            -Dsonar.externalIssuesReportPaths
+            -Dsonar.sarifReportPaths=home/runner/work/maven-tutorial/maven-tutorial
+            -Dsonar.externalIssuesReportPaths=home/runner/work/maven-tutorial/maven-tutorial
             #-Dsonar.projectBaseDir=
             #-Dsonar.tests=
       
