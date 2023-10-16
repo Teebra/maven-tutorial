@@ -53,8 +53,8 @@ jobs:
             -Dsonar.analysis.mode=publish
             -Dsonar.dynamicAnalysis=reuseReports
             -Dsonar.verbose=true
-            -Dsonar.projectDescription
-            -Dsonar.links.issue
+            -Dsonar.sarifReportPaths
+            -Dsonar.externalIssuesReportPaths
             #-Dsonar.projectBaseDir=
             #-Dsonar.tests=
 
