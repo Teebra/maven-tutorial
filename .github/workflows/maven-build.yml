@@ -49,8 +49,9 @@ jobs:
         with:
           java-version: 17
       
-      - name: Commit No
-        run: git rev-parse HEAD
+      - name: Display Commit ID
+        run: |
+          echo "The GitHub commit ID is ${{ github.sha }}"
 
       - name: Analyze with SonarQube
         env:
