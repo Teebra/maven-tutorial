@@ -34,10 +34,7 @@ jobs:
     name: Analyze with SonarQube
     needs: build_maven_package
     runs-on: ubuntu-latest
-    if: startsWith(github.event.pull_request.head.ref, 'branch-1.') &&
-         startsWith(github.event.pull_request.base.ref, 'branch-1.') &&
-         !endsWith(github.event.pull_request.head.ref, '.0.0') &&
-         !endsWith(github.event.pull_request.base.ref, '.1.0')
+    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
