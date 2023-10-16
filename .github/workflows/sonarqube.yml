@@ -34,7 +34,7 @@ jobs:
           path: target/*.jar
       
       - name: check 1
-        run: pwd
+        run: ls
 
       - name: Analyze with SonarQube
 
