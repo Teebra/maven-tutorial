@@ -45,6 +45,7 @@ jobs:
         with:
           args:
             -Dsonar.projectKey=sonartest
+            -Dsonar.projectName=sonartest
             -Dsonar.sources=src/main/java
             -Dsonar.java.binaries=**classes**
             -Dsonar.exclusions=**package-info.**
