@@ -32,6 +32,9 @@ jobs:
         with:
           name: jar_package
           path: target/*.jar
+      
+      - name: check 1
+        run: pwd
 
       - name: Analyze with SonarQube
 
@@ -57,4 +60,7 @@ jobs:
             -Dsonar.externalIssuesReportPaths
             #-Dsonar.projectBaseDir=
             #-Dsonar.tests=
+      
+      - name: check 2
+        run: ls
 
