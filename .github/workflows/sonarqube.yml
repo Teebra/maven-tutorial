@@ -57,10 +57,15 @@ jobs:
             -Dsonar.dynamicAnalysis=reuseReports
             -Dsonar.verbose=true
             -Dsonar.sarifReportPaths=reports/sarif
+      
+      - name: check 1
+        run: |
+          cd ~
+          ls
 
       - name: Upload SARIF report to GitHub
         uses: actions/upload-artifact@v3
         with:
           name: sarif-report.sarif
-          path: ${HOME}/.sonar/sarif-report.sarif
+          path: ./sarif-report.sarif
 
