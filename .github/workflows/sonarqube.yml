@@ -52,7 +52,9 @@ jobs:
             -Dsonar.sourceEncoding=UTF-8 
             -Dsonar.analysis.mode=publish
             -Dsonar.dynamicAnalysis=reuseReports
+            -Dsonar.projectDescription
+            -Dsonar.links.issue
             #-Dsonar.projectBaseDir=
             #-Dsonar.tests=
-            #-Dsonar.verbose=
+            -Dsonar.verbose=true
 
