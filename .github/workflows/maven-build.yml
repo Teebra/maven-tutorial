@@ -55,8 +55,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
-          mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.projectKey=sonartest
+          mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.projectKey=sonartest -Dsonar.sources=. -Dsonar.tests=. 
+          ls
 
-          # Show SonarQube analysis result in the console
-          echo sonar-result-print
-          cat target/sonar/report-task.txt > sonar-report.json
