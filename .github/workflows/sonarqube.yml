@@ -32,7 +32,7 @@ jobs:
         with:
           name: jar_package
           path: target/*.jar
-          
+
       - name: Analyze with SonarQube
 
         # You can pin the exact commit or the version.
@@ -46,6 +46,8 @@ jobs:
           args:
             -Dsonar.projectKey=sonartest
             -Dsonar.sources=src/main/java
+            -Dsonar.java.binaries=**classes**
+            -Dsonar.exclusions=**package-info.**
             #-Dsonar.projectBaseDir=
             #-Dsonar.tests=
             #-Dsonar.verbose=
