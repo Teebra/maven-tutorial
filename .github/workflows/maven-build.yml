@@ -48,6 +48,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
+      
+      - name: Commit No
+        run: git rev-parse HEAD
 
       - name: Analyze with SonarQube
         env:
