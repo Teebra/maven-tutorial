@@ -8,6 +8,7 @@ on:
 jobs:
   veracode:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -23,4 +24,5 @@ jobs:
 
       - name: Veracode Scan
         run: |
+          ls
           echo veracode scan start
