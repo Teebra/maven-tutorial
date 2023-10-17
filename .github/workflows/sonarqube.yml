@@ -63,9 +63,4 @@ jobs:
           echo ${{ github.run_number }}
           echo ${{ github.run_attempt }}
 
-      - name: Upload SARIF report to GitHub
-        uses: actions/upload-artifact@v3
-        with:
-          name: sarif-report.sarif
-          path: ./sarif-report.sarif
 
