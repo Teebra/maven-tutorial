@@ -44,18 +44,18 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           args:
-            -Dsonar.projectKey=sonartest
-            -Dsonar.projectName=sonartest
             -Dsonar.projectBaseDir=.
+            -Dsonar.projectVersion=1.${{ github.run_number }}
             -Dsonar.java.source=1.8 
             -Dsonar.sources=src/main/java
             -Dsonar.java.binaries=**classes**
             -Dsonar.exclusions=**package-info.**
-            -Dsonar.sourceEncoding=UTF-8 
+            -Dsonar.sourceEncoding=UTF-8
+            -Dsonar.projectKey=sonartest
+            -Dsonar.projectName=sonartest 
             -Dsonar.analysis.mode=publish
             -Dsonar.dynamicAnalysis=reuseReports
-            -Dsonar.verbose=true
-            -Dsonar.sarifReportPaths=reports/sarif
+
       
       - name: check 1
         run: |

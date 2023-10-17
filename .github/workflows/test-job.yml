@@ -16,7 +16,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: jar_package
-          path: target/ # Modify to the destination path
+          path: target/
 
       - name: Veracode Scan
         run: |
