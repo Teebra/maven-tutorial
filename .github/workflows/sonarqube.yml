@@ -30,7 +30,7 @@ jobs:
       - name: Archive Maven Package
         uses: actions/upload-artifact@v3
         with:
-          name: jar_package-${{ github.sha }}
+          name: jar_package
           path: target/*.jar
       
       - name: check 1

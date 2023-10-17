@@ -13,14 +13,18 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Veracode Scan
-        run: mkdir Artifact
+        run: mkdir artifacts
 
-      - name: Download Artifact
-        uses: actions/download-artifact@v3
+      - name: Download build artifact from triggered workflow
+        uses: dawidd6/action-download-artifact@v2
         with:
-          name: jar_package-${{ github.sha }}
+          run_id: ${{ github.event.workflow_run.id }}
+          name: jar_package
+          path: ./artifacts
+          search_artifacts: true
 
       - name: Veracode Scan
         run: |
-          ls
           echo veracode scan start
+          cd artifacts
+          ls
