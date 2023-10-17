@@ -30,7 +30,7 @@ jobs:
       - name: Archive Maven Package
         uses: actions/upload-artifact@v3
         with:
-          name: jar_package-${{ github.run_number }}
+          name: jar_package-${{ github.sha }}
           path: target/*.jar
       
       - name: check 1
@@ -62,5 +62,6 @@ jobs:
           echo ${{ github.run_id }}
           echo ${{ github.run_number }}
           echo ${{ github.run_attempt }}
+          echo ${{ github.sha }}
 
 

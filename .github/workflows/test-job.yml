@@ -11,12 +11,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      
+       name: Veracode Scan
+        run: mkdir Artifact
 
       - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
-          name: jar_package-${{ github.run_number }}
-          path: target/
+          name: jar_package-${{ github.sha }}
+          path: Artifact/
 
       - name: Veracode Scan
         run: |
