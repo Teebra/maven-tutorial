@@ -15,7 +15,7 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v2
         with:
-          name: my-artifact
+          name: jar_package
           path: target/ # Modify to the destination path
 
       - name: Veracode Scan
