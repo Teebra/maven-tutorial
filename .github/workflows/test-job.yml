@@ -12,7 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-       name: Veracode Scan
+      - name: Veracode Scan
         run: mkdir Artifact
 
       - name: Download Artifact
