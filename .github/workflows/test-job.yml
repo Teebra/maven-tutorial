@@ -1,7 +1,7 @@
 name: Veracode Workflow
 on:
   workflow_run:
-    workflows: ["sonarqube.yml"]
+    workflows: ["SonarQube analysis"]
     types:
       - completed
 
