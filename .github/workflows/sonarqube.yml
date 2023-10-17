@@ -28,9 +28,9 @@ jobs:
         run: mvn clean install
 
       - name: Archive Maven Package
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          name: jar_package
+          name: jar_package-${{ github.run_number }}
           path: target/*.jar
       
       - name: check 1
