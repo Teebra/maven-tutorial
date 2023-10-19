@@ -78,7 +78,7 @@ jobs:
             echo "success"
           fi
 
-  Analysis:
+  Veracode Analysis:
     if: startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '.0') == false
     runs-on: ubuntu-latest
 
