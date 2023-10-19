@@ -64,6 +64,17 @@ jobs:
           echo ${{ github.run_number }}
           echo ${{ github.run_attempt }}
           echo ${{ github.sha }}
-          echo ${{ github.head_ref }}
 
+      - name: Get branch name
+        id: branch_name
+        run: echo "::set-output name=branch_name::${GITHUB_REF#refs/heads/}"
+
+      - name: Check branch name
+        run: |
+          branch_name=${{ steps.branch_name.outputs.branch_name }}
+          if [[ $branch_name == release*0 ]]; then
+            echo "fail"
+          else
+            echo "success"
+          fi
 
