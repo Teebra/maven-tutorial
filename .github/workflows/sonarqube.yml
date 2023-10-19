@@ -37,24 +37,25 @@ jobs:
         run: pwd
 
       - name: Analyze with SonarQube
-        uses: SonarSource/sonarqube-scan-action@7295e71c9583053f5bf40e9d4068a0c974603ec8
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Needed to get PR information
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          args:
-            -Dsonar.projectBaseDir=.
-            -Dsonar.projectVersion=1.${{ github.run_number }}
-            -Dsonar.java.source=1.8 
-            -Dsonar.sources=src/main/java
-            -Dsonar.java.binaries=**classes**
-            -Dsonar.exclusions=**package-info.**
-            -Dsonar.sourceEncoding=UTF-8
-            -Dsonar.projectKey=sonartest
-            -Dsonar.projectName=sonartest 
-            -Dsonar.analysis.mode=publish
-            -Dsonar.dynamicAnalysis=reuseReports
+        run: echo sonarqube Analyze
+        # uses: SonarSource/sonarqube-scan-action@7295e71c9583053f5bf40e9d4068a0c974603ec8
+        # env:
+        #   GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Needed to get PR information
+        #   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        #   SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        # with:
+        #   args:
+        #     -Dsonar.projectBaseDir=.
+        #     -Dsonar.projectVersion=1.${{ github.run_number }}
+        #     -Dsonar.java.source=1.8 
+        #     -Dsonar.sources=src/main/java
+        #     -Dsonar.java.binaries=**classes**
+        #     -Dsonar.exclusions=**package-info.**
+        #     -Dsonar.sourceEncoding=UTF-8
+        #     -Dsonar.projectKey=sonartest
+        #     -Dsonar.projectName=sonartest 
+        #     -Dsonar.analysis.mode=publish
+        #     -Dsonar.dynamicAnalysis=reuseReports
 
       
       - name: check 1
@@ -63,5 +64,6 @@ jobs:
           echo ${{ github.run_number }}
           echo ${{ github.run_attempt }}
           echo ${{ github.sha }}
+          echo ${{ github.head_ref }}
 
 
