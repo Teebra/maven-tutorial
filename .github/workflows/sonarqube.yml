@@ -79,7 +79,7 @@ jobs:
           fi
 
   Veracode:
-    if: startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '.0') == false
+    if: startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '.0') == true
     runs-on: ubuntu-latest
 
     steps:
