@@ -76,7 +76,7 @@ jobs:
     # if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == false
 
     runs-on: ubuntu-latest
-    needs: [Analysis, SkipVeracode]
+    needs: [Analysis]
 
     steps:
       - name: Checkout Repository
