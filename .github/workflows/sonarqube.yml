@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout Repository
         uses: actions/checkout@v2
 
@@ -32,12 +31,10 @@ jobs:
         with:
           name: jar_package
           path: target/*.jar
-      
-      - name: check 1
-        run: pwd
 
       - name: Analyze with SonarQube
         run: echo sonarqube Analyze
+        # Add your SonarQube analysis action here
         # uses: SonarSource/sonarqube-scan-action@7295e71c9583053f5bf40e9d4068a0c974603ec8
         # env:
         #   GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Needed to get PR information
@@ -57,14 +54,6 @@ jobs:
         #     -Dsonar.analysis.mode=publish
         #     -Dsonar.dynamicAnalysis=reuseReports
 
-      
-      - name: check 1
-        run: |
-          echo ${{ github.run_id }}
-          echo ${{ github.run_number }}
-          echo ${{ github.run_attempt }}
-          echo ${{ github.sha }}
-
       - name: Get branch name
         id: branch_name
         run: echo "::set-output name=branch_name::${GITHUB_REF#refs/heads/}"
@@ -80,14 +69,12 @@ jobs:
 
   Veracode:
     if: !(startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0'))
-
     runs-on: ubuntu-latest
     needs: [Analysis]
 
     steps:
-
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: veraocde
+      - name: veracode
         run: sleep 20s
