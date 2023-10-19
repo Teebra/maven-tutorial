@@ -78,3 +78,14 @@ jobs:
             echo "success"
           fi
 
+  Analysis:
+    if: startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '.0') == false
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: veraocde
+        run: sleep 20s
