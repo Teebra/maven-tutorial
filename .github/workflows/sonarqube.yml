@@ -68,14 +68,7 @@ jobs:
           fi
 
   Veracode:
-    if: github.event_name != 'pull_request' || 
-    (github.event_name == 'pull_request' &&
-        github.event.pull_request.base.ref != 'main' &&
-        !(
-            startsWith(github.event.pull_request.head.ref, 'release') && 
-            endsWith(github.event.pull_request.head.ref, '0')
-        )
-    )
+    if: !(github.event_name == 'pull_request' && startsWith(github.event.pull_request.base.ref, 'main') && startsWith(github.event.pull_request.head.ref, 'release') && endsWith(github.event.pull_request.head.ref, '0'))
     # if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == false
 
     runs-on: ubuntu-latest
