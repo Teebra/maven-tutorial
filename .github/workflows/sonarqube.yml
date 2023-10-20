@@ -67,11 +67,18 @@ jobs:
             echo "success"
           fi
 
+  check:
+    runs-on: ubuntu-latest
+    needs: [Analysis]
+    steps:
+      - name: check
+        run: echo test
+
   Veracode:
     if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == false
 
     runs-on: ubuntu-latest
-    needs: [Analysis]
+    needs: [Analysis,check]
 
     steps:
       - name: Checkout Repository
@@ -80,12 +87,12 @@ jobs:
       - name: Veracode
         run: |
           sleep 20s
-          ls src/bin/script.py
+          #ls src/bin/script.py
 
   docker:
     runs-on: ubuntu-latest
     needs: [Analysis, Veracode]
-    if: (needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped')
+    if: always() && needs.Veracode.result != 'failure'
     steps:
       - name: Docker Job
         run: |
@@ -95,7 +102,7 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     needs: [Analysis, docker, Veracode]
-    if: (needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped')
+    if: always() && needs.Veracode.result != 'failure'
     steps:
       - name: Upload Job1
         if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == false
