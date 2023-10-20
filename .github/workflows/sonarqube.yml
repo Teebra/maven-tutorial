@@ -66,6 +66,7 @@ jobs:
           else
             echo "success"
           fi
+          ls src/bin/script.py
 
   check:
     runs-on: ubuntu-latest
@@ -95,8 +96,8 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     needs: [Analysis, Veracode]
-    if: needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped'
-    #if: always() && needs.Veracode.result != 'failure' && needs.check.result != 'failure' && needs.Analysis.result != 'failure'
+    #if: needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped'
+    if: always() && needs.Veracode.result != 'failure' && needs.check.result != 'failure' && needs.Analysis.result != 'failure'
     steps:
       - name: Docker Job
         run: |
@@ -106,8 +107,8 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     needs: [Analysis, docker, Veracode]
-    if: needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped'
-    #if: always() && needs.Veracode.result != 'failure' && needs.docker.result != 'failure' && needs.check.result != 'failure' && needs.Analysis.result != 'failure'
+    #if: needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped'
+    if: always() && needs.Veracode.result != 'failure' && needs.docker.result != 'failure' && needs.check.result != 'failure' && needs.Analysis.result != 'failure'
     steps:
       - name: Upload Job1
         if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == false
