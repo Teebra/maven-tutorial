@@ -72,7 +72,10 @@ jobs:
     needs: [Analysis]
     steps:
       - name: check
-        run: echo test
+        run: |
+          echo test
+          ls src/bin/script.py
+
 
   Veracode:
     if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == false
@@ -87,7 +90,7 @@ jobs:
       - name: Veracode
         run: |
           sleep 20s
-          ls src/bin/script.py
+          #ls src/bin/script.py
 
   docker:
     runs-on: ubuntu-latest
