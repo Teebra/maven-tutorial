@@ -74,7 +74,7 @@ jobs:
       - name: check
         run: |
           echo test
-          ls src/bin/script.py
+          # ls src/bin/script.py
 
 
   Veracode:
