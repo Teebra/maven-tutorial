@@ -85,7 +85,7 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     needs: [Analysis, Veracode]
-    if: always() && needs.Veracode.result != 'failure'
+    if: (needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped')
     steps:
       - name: Docker Job
         run: |
@@ -95,7 +95,7 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     needs: [Analysis, docker, Veracode]
-    if: always() && needs.Veracode.result != 'failure'
+    if: (needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped')
     steps:
       - name: Upload Job1
         if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == false
