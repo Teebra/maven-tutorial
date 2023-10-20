@@ -101,15 +101,15 @@ jobs:
         if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == false
         run: |
           echo docker run
-      
+
       - name: Upload Job2
         run: |
           echo docker run
-      
+
       - name: Upload Job3
         run: |
           echo docker run
-      
+
       - name: Upload Job4
         run: |
           echo docker run
