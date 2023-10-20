@@ -113,5 +113,5 @@ jobs:
       - name: Upload Job4
         run: |
           echo docker run
-          echo ${{needs.Veracode.result}}
+          echo "${{needs.Veracode.result}}"
     
