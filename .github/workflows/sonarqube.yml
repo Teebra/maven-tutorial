@@ -85,7 +85,7 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     needs: [Analysis, Veracode]
-    if: always() && needs.Skipped-Job.result != 'failed'
+    if: always() && needs.Veracode.result != 'failed'
     steps:
       - name: Docker Job
         run: |
