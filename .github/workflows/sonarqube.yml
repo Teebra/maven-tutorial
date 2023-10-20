@@ -79,27 +79,18 @@ jobs:
 
       - name: veracode
         run: sleep 20s
-  
-  job_2_test:
-    runs-on: ubuntu-latest
-    needs: [Analysis]
 
-    steps:
-      - name: status
-        run: echo job2
   
-  upload_1:
+  docker:
     runs-on: ubuntu-latest
-    needs: [Analysis,job_2_test, Veracode]
-    if: ${{ needs.Veracode.result != 'success' }} # Only run if Veracode is not successful
+    needs: [Analysis, Veracode]
     steps:
       - name: status
-        run: echo job1
+        run: echo docker
     
   upload_2:
     runs-on: ubuntu-latest
-    needs: [Analysis, job_2_test]
-    if: ${{ needs.Veracode.result == 'success' }} # Replace 'success' with the desired condition
+    needs: [Analysis, docker, veracode]
     steps:
       - name: status
         run: echo job2
