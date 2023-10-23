@@ -108,7 +108,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [Analysis, check, Veracode, check_1]
     #if: needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped'
-    if: always() && needs.Veracode.result != 'failure' && needs.check.result != 'failure' && needs.Analysis.result != 'failure' && needs.check_1.result != 'failure' #&& needs.check.result != 'skipped' && needs.Analysis.result != 'skipped' && needs.check_1.result != 'skipped'
+    if: always() && needs.Veracode.result != 'failure' && needs.check.result != 'failure' && needs.Analysis.result != 'failure' && needs.check_1.result != 'failure' && needs.check.result != 'skipped' && needs.Analysis.result != 'skipped' && needs.check_1.result != 'skipped'
     steps:
       - name: Docker Job
         run: |
@@ -119,7 +119,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [Analysis, check, check_1, docker, Veracode]
     #if: needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped'
-    if: always() && needs.Veracode.result != 'failure' && needs.docker.result != 'failure' && needs.check.result != 'failure' && needs.Analysis.result != 'failure' && needs.check_1.result != 'failure' #&& needs.docker.result != 'skipped' && needs.check.result != 'skipped' && needs.Analysis.result != 'skipped'
+    if: always() && needs.Veracode.result != 'failure' && needs.docker.result != 'failure' && needs.check.result != 'failure' && needs.Analysis.result != 'failure' && needs.check_1.result != 'failure' && needs.docker.result != 'skipped' && needs.check.result != 'skipped' && needs.Analysis.result != 'skipped' && needs.check_1.result != 'skipped'
     steps:
       - name: Upload Job1
         if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == false
