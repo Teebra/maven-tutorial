@@ -93,7 +93,7 @@ jobs:
     if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == false
 
     runs-on: ubuntu-latest
-    needs: [Analysis,check]
+    needs: [Analysis,check, check_1]
 
     steps:
       - name: Checkout Repository
@@ -106,7 +106,7 @@ jobs:
 
   docker:
     runs-on: ubuntu-latest
-    needs: [Analysis, Veracode]
+    needs: [Analysis, check, Veracode, check_1]
     #if: needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped'
     if: always() && needs.Veracode.result != 'failure' && needs.check.result != 'failure' && needs.Analysis.result != 'failure' && needs.check.result != 'skipped' && needs.Analysis.result != 'skipped' && needs.check_1.result != 'skipped'
     steps:
@@ -117,7 +117,7 @@ jobs:
 
   upload:
     runs-on: ubuntu-latest
-    needs: [Analysis, docker, Veracode]
+    needs: [Analysis, check, check_1, docker, Veracode]
     #if: needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped'
     if: always() && needs.Veracode.result != 'failure' && needs.docker.result != 'failure' && needs.check.result != 'failure' && needs.Analysis.result != 'failure' && needs.docker.result != 'skipped' && needs.check.result != 'skipped' && needs.Analysis.result != 'skipped'
     steps:
