@@ -32,118 +32,131 @@ jobs:
           name: jar_package
           path: target/*.jar
 
-      - name: Analyze with SonarQube
-        run: echo sonarqube Analyze
-        # Add your SonarQube analysis action here
-        # uses: SonarSource/sonarqube-scan-action@7295e71c9583053f5bf40e9d4068a0c974603ec8
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Needed to get PR information
-        #   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        #   SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        # with:
-        #   args:
-        #     -Dsonar.projectBaseDir=.
-        #     -Dsonar.projectVersion=1.${{ github.run_number }}
-        #     -Dsonar.java.source=1.8 
-        #     -Dsonar.sources=src/main/java
-        #     -Dsonar.java.binaries=**classes**
-        #     -Dsonar.exclusions=**package-info.**
-        #     -Dsonar.sourceEncoding=UTF-8
-        #     -Dsonar.projectKey=sonartest
-        #     -Dsonar.projectName=sonartest 
-        #     -Dsonar.analysis.mode=publish
-        #     -Dsonar.dynamicAnalysis=reuseReports
+      - name: Pipeline-Scan Action Step
+        id: pipeline-scan
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.9
+        with:
+          vid: ${{ secrets.VERACODE_API_ID }}
+          vkey: ${{ secrets.VERACODE_API_KEY }}
+          file: 'target/*.jar'
+          project_name: ${{ env.PROJECT_NAME }}
+          json_output: true
+          #baseline_file: "veracode/veracode-pipeline-scan-baseline-file.json"
+          summary_display: true
+        continue-on-error: true
 
-      - name: Get branch name
-        id: branch_name
-        run: echo "::set-output name=branch_name::${GITHUB_REF#refs/heads/}"
+  #     - name: Analyze with SonarQube
+  #       run: echo sonarqube Analyze
+  #       # Add your SonarQube analysis action here
+  #       # uses: SonarSource/sonarqube-scan-action@7295e71c9583053f5bf40e9d4068a0c974603ec8
+  #       # env:
+  #       #   GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Needed to get PR information
+  #       #   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #       #   SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  #       # with:
+  #       #   args:
+  #       #     -Dsonar.projectBaseDir=.
+  #       #     -Dsonar.projectVersion=1.${{ github.run_number }}
+  #       #     -Dsonar.java.source=1.8 
+  #       #     -Dsonar.sources=src/main/java
+  #       #     -Dsonar.java.binaries=**classes**
+  #       #     -Dsonar.exclusions=**package-info.**
+  #       #     -Dsonar.sourceEncoding=UTF-8
+  #       #     -Dsonar.projectKey=sonartest
+  #       #     -Dsonar.projectName=sonartest 
+  #       #     -Dsonar.analysis.mode=publish
+  #       #     -Dsonar.dynamicAnalysis=reuseReports
 
-      - name: Check branch name
-        run: |
-          branch_name=${{ steps.branch_name.outputs.branch_name }}
-          if [[ $branch_name == release*0 ]]; then
-            echo "fail"
-          else
-            echo "success"
-          fi
-          #ls src/bin/script.py
+  #     - name: Get branch name
+  #       id: branch_name
+  #       run: echo "::set-output name=branch_name::${GITHUB_REF#refs/heads/}"
 
-  check:
-    runs-on: ubuntu-latest
-    needs: [Analysis]
-    #if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == true
-    steps:
-      - name: check
-        run: |
-          echo test
-          # ls src/bin/script.py
+  #     - name: Check branch name
+  #       run: |
+  #         branch_name=${{ steps.branch_name.outputs.branch_name }}
+  #         if [[ $branch_name == release*0 ]]; then
+  #           echo "fail"
+  #         else
+  #           echo "success"
+  #         fi
+  #         #ls src/bin/script.py
+
+  # check:
+  #   runs-on: ubuntu-latest
+  #   needs: [Analysis]
+  #   #if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == true
+  #   steps:
+  #     - name: check
+  #       run: |
+  #         echo test
+  #         # ls src/bin/script.py
   
-  check_1:
-    runs-on: ubuntu-latest
-    needs: [Analysis, check]
-    #if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == true
-    steps:
-      - name: check
-        run: |
-          echo test
-          # ls src/bin/script.py
+  # check_1:
+  #   runs-on: ubuntu-latest
+  #   needs: [Analysis, check]
+  #   #if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == true
+  #   steps:
+  #     - name: check
+  #       run: |
+  #         echo test
+  #         # ls src/bin/script.py
   
-  list-jobs:
-    runs-on: ubuntu-latest
-    needs: [Analysis, check, check_1]
-    steps:
-      - uses: ./sonarqube.yml
-        id: list-jobs
-      - run: cat ${{ steps.list-jobs.outputs.jobs-file }}
+  # list-jobs:
+  #   runs-on: ubuntu-latest
+  #   needs: [Analysis, check, check_1]
+  #   steps:
+  #     - uses: ./sonarqube.yml
+  #       id: list-jobs
+  #     - run: cat ${{ steps.list-jobs.outputs.jobs-file }}
 
 
-  Veracode:
-    if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == false
+  # Veracode:
+  #   if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == false
 
-    runs-on: ubuntu-latest
-    needs: [Analysis,check, check_1,list-jobs]
+  #   runs-on: ubuntu-latest
+  #   needs: [Analysis,check, check_1,list-jobs]
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v2
 
-      - name: Veracode
-        run: |
-          sleep 20s
-          #ls src/bin/script.py
+  #     - name: Veracode
+  #       run: |
+  #         sleep 20s
+  #         #ls src/bin/script.py
 
-  docker:
-    runs-on: ubuntu-latest
-    needs: [Analysis, check, Veracode, check_1,list-jobs]
-    #if: needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped'
-    if: always() && needs.Veracode.result != 'failure' && needs.check.result != 'failure' && needs.Analysis.result != 'failure' && needs.check_1.result != 'failure' && needs.check.result != 'skipped' && needs.Analysis.result != 'skipped' && needs.check_1.result != 'skipped'
-    steps:
-      - name: Docker Job
-        run: |
-          echo docker run
-          echo 'needs.Veracode.result'
+  # docker:
+  #   runs-on: ubuntu-latest
+  #   needs: [Analysis, check, Veracode, check_1,list-jobs]
+  #   #if: needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped'
+  #   if: always() && needs.Veracode.result != 'failure' && needs.check.result != 'failure' && needs.Analysis.result != 'failure' && needs.check_1.result != 'failure' && needs.check.result != 'skipped' && needs.Analysis.result != 'skipped' && needs.check_1.result != 'skipped'
+  #   steps:
+  #     - name: Docker Job
+  #       run: |
+  #         echo docker run
+  #         echo 'needs.Veracode.result'
 
-  upload:
-    runs-on: ubuntu-latest
-    needs: [Analysis, check, check_1, docker, Veracode, list-jobs]
-    #if: needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped'
-    if: always() && needs.Veracode.result != 'failure' && needs.docker.result != 'failure' && needs.check.result != 'failure' && needs.Analysis.result != 'failure' && needs.check_1.result != 'failure' && needs.docker.result != 'skipped' && needs.check.result != 'skipped' && needs.Analysis.result != 'skipped' && needs.check_1.result != 'skipped'
-    steps:
-      - name: Upload Job1
-        if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == false
-        run: |
-          echo docker run
+  # upload:
+  #   runs-on: ubuntu-latest
+  #   needs: [Analysis, check, check_1, docker, Veracode, list-jobs]
+  #   #if: needs.Veracode.result != 'failure' || needs.veracode.result == 'success' || needs.veracode.result == 'skipped'
+  #   if: always() && needs.Veracode.result != 'failure' && needs.docker.result != 'failure' && needs.check.result != 'failure' && needs.Analysis.result != 'failure' && needs.check_1.result != 'failure' && needs.docker.result != 'skipped' && needs.check.result != 'skipped' && needs.Analysis.result != 'skipped' && needs.check_1.result != 'skipped'
+  #   steps:
+  #     - name: Upload Job1
+  #       if: (startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == false
+  #       run: |
+  #         echo docker run
       
-      - name: Upload Job2
-        run: |
-          echo docker run
+  #     - name: Upload Job2
+  #       run: |
+  #         echo docker run
       
-      - name: Upload Job3
-        run: |
-          echo docker run
+  #     - name: Upload Job3
+  #       run: |
+  #         echo docker run
       
-      - name: Upload Job4
-        run: |
-          echo docker run
-          echo "${{needs.Veracode.result}}"
+  #     - name: Upload Job4
+  #       run: |
+  #         echo docker run
+  #         echo "${{needs.Veracode.result}}"
     
