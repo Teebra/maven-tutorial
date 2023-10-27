@@ -46,7 +46,6 @@ jobs:
       #   continue-on-error: true
 
       - name: Analyze with SonarQube
-        run: echo sonarqube Analyze
         uses: sonarsource/sonarqube-scan-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Needed to get PR information
