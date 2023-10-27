@@ -32,40 +32,38 @@ jobs:
       #     name: jar_package
       #     path: target/*.jar
 
-      - name: Pipeline-Scan Action Step
-        id: pipeline-scan
-        uses: veracode/Veracode-pipeline-scan-action@v1.0.9
-        with:
-          vid: ${{ secrets.VERACODE_API_ID }}
-          vkey: ${{ secrets.VERACODE_API_KEY }}
-          file: 'target/*.jar'
-          project_name: ${{ env.PROJECT_NAME }}
-          json_output: true
-          #baseline_file: "veracode/veracode-pipeline-scan-baseline-file.json"
-          summary_display: true
-        continue-on-error: true
+      # - name: Pipeline-Scan Action Step
+      #   id: pipeline-scan
+      #   uses: veracode/Veracode-pipeline-scan-action@v1.0.9
+      #   with:
+      #     vid: ${{ secrets.VERACODE_API_ID }}
+      #     vkey: ${{ secrets.VERACODE_API_KEY }}
+      #     file: 'target/*.jar'
+      #     project_name: ${{ env.PROJECT_NAME }}
+      #     json_output: true
+      #     #baseline_file: "veracode/veracode-pipeline-scan-baseline-file.json"
+      #     summary_display: true
+      #   continue-on-error: true
 
-  #     - name: Analyze with SonarQube
-  #       run: echo sonarqube Analyze
-  #       # Add your SonarQube analysis action here
-  #       # uses: SonarSource/sonarqube-scan-action@7295e71c9583053f5bf40e9d4068a0c974603ec8
-  #       # env:
-  #       #   GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Needed to get PR information
-  #       #   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  #       #   SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-  #       # with:
-  #       #   args:
-  #       #     -Dsonar.projectBaseDir=.
-  #       #     -Dsonar.projectVersion=1.${{ github.run_number }}
-  #       #     -Dsonar.java.source=1.8 
-  #       #     -Dsonar.sources=src/main/java
-  #       #     -Dsonar.java.binaries=**classes**
-  #       #     -Dsonar.exclusions=**package-info.**
-  #       #     -Dsonar.sourceEncoding=UTF-8
-  #       #     -Dsonar.projectKey=sonartest
-  #       #     -Dsonar.projectName=sonartest 
-  #       #     -Dsonar.analysis.mode=publish
-  #       #     -Dsonar.dynamicAnalysis=reuseReports
+      - name: Analyze with SonarQube
+        run: echo sonarqube Analyze
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Needed to get PR information
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args:
+            -Dsonar.projectBaseDir=.
+            -Dsonar.projectVersion=1.${{ github.run_number }}
+            -Dsonar.sources=src/main/java
+            -Dsonar.java.binaries=**classes**
+            -Dsonar.exclusions=**package-info.**
+            -Dsonar.sourceEncoding=UTF-8
+            -Dsonar.projectKey=sonartest
+            -Dsonar.projectName=sonartest 
+            -Dsonar.analysis.mode=publish
+            -Dsonar.dynamicAnalysis=reuseReports
 
   #     - name: Get branch name
   #       id: branch_name
