@@ -23,17 +23,11 @@ jobs:
         with:
           java-version: 17
 
-      - name: Get Branch and Repository Name
-        id: info
-        run: |
-          echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
-          echo "::set-output name=repository::${GITHUB_REPOSITORY}"
-        shell: bash
+      - name: Get Branch Name
+        run: echo "Branch name is ${{ github.ref }}"
 
-      - name: Display Branch and Repository Name
-        run: |
-          echo "Current Branch: ${{ steps.info.outputs.branch }}"
-          echo "Repository Name: ${{ steps.info.outputs.repository }}"
+      - name: Get Repo Name
+        run: echo "Repository name is ${{ github.repository }}"
 
       - name: Build with Maven
         run: mvn clean install
