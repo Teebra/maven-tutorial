@@ -22,10 +22,7 @@ jobs:
           cat test.txt
       
       - name: Push changes
-        #if: startsWith(github.ref, 'refs/heads/release-') || github.ref == 'refs/heads/master'
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.PAT_TOKEN }}
-          #branch: ${{ github.ref }}
+        run: |
+          git push https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git main
 
       
