@@ -39,7 +39,7 @@ jobs:
 
       - name: Push with Personal Access Token
         env:
-          PAT: ${{ secrets.PAT }}
+          PAT: ${{ secrets.PAT_TOKEN }}
         run: |
           git add "artifacts"
           git stash
