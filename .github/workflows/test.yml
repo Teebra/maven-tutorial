@@ -9,7 +9,8 @@ on:
 
 jobs:
   veracode:
-    runs-on: ubuntu-latest
+    using: "composite"
+    #runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
