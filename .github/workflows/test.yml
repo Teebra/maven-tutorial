@@ -21,15 +21,34 @@ jobs:
           echo "test the loop" > test.txt
           cat test.txt
       
-      - name: Push changes
+      # - name: Push changes
+      #   run: |
+      #     git config --global user.name "teebra1"
+      #     git config --global user.email "teebrakanakdeka@yahoo.com"
+      #     git add "artifacts"
+      #     git stash
+      #     git pull origin main || echo "Couldn't find remote branch"
+      #     git checkout stash -- .
+      #     git commit -m "Baseline File push from pipeline"
+      #     git push origin HEAD:main --force-with-lease
+
+      - name: Set up Git
         run: |
           git config --global user.name "teebra1"
           git config --global user.email "teebrakanakdeka@yahoo.com"
+
+      - name: Push with Personal Access Token
+        env:
+          PAT: ${{ secrets.PAT }}
+        run: |
           git add "artifacts"
           git stash
           git pull origin main || echo "Couldn't find remote branch"
           git checkout stash -- .
           git commit -m "Baseline File push from pipeline"
           git push origin HEAD:main --force-with-lease
+        shell: bash
+        env:
+          PAT: ${{ secrets.PAT_TOKEN }}
 
       
