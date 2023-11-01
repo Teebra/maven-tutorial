@@ -14,23 +14,4 @@ jobs:
       - name: Build
         run: echo "Building something..."
 
-  trigger_target_workflow:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Trigger MyTargetWorkflow
-        uses: actions/github-script@0.8.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { data: workflow } = await github.actions.getWorkflow({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 123456, // Replace with the ID of MyTargetWorkflow
-            });
-            await github.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: workflow.id,
-              ref: "main", // Replace with the branch you want to trigger MyTargetWorkflow on
-            });
+# This workflow file doesn't need to include the trigger for the next workflow

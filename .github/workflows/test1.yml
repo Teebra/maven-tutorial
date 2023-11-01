@@ -14,5 +14,3 @@ jobs:
         uses: actions/checkout@v2
       - name: Run Target Job
         run: echo "This is the target job..."
-
-# Add any additional steps specific to the target workflow
