@@ -1,53 +1,23 @@
-name: Veracode Workflow
+name: TriggerWorkflow
 
 on:
   push:
-    branches: '*'
-  pull_request:
-    branches: '*'
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
-  veracode:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-      
-      - name: Veracode Scan
-        run: |
-          mkdir artifacts
-          cd artifacts
-          echo "test the loop" > test.txt
-          cat test.txt
-      
-      # - name: Push changes
-      #   run: |
-      #     git config --global user.name "sdfsdfs"
-      #     git config --global user.email "sdfsdfsf"
-      #     git add "artifacts"
-      #     git stash
-      #     git pull origin main || echo "Couldn't find remote branch"
-      #     git checkout stash -- .
-      #     git commit -m "Baseline File push from pipeline"
-      #     git push origin HEAD:main --force-with-lease
+        uses: actions/checkout@v2
+      - name: Build
+        run: echo "Building something..."
 
-      - name: Set up Git
-        run: |
-          if ! git diff --quiet; then
-            git config user.name sdfsdfsd
-            git config user.email sdfsdfsdfs
-            git add .
-            git commit -m "updated"
-          else
-            echo "No changes found"
-          fi
-
-      - name: Push changes
-        #if: startsWith(github.ref, 'refs/heads/release-') || github.ref == 'refs/heads/master'
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.PAT_TOKEN }}
-          branch: ${{ github.ref }}
-
-      
+# Trigger MyTargetWorkflow after the build job is complete
+workflows:
+  version: 2
+  my-workflow:
+    jobs:
+      - build
+    resolves: MyTargetWorkflow

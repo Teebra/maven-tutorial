@@ -1,0 +1,18 @@
+name: MyTargetWorkflow
+
+on:
+  workflow_run:
+    workflows: ["TriggerWorkflow"]
+    types:
+      - completed
+
+jobs:
+  target:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run Target Job
+        run: echo "This is the target job..."
+
+# Add any additional steps specific to the target workflow
