@@ -34,19 +34,20 @@ jobs:
 
       - name: Set up Git
         run: |
-          git config --global user.name "teebra1"
-          git config --global user.email "teebrakanakdeka@yahoo.com"
+          if ! git diff --quiet; then
+            git config user.name teebra1
+            git config user.email teebrakanakdeka@yahoo.com
+            git add .
+            git commit -m "updated"
+          else
+            echo "No changes found"
+          fi
 
-      - name: Push with Personal Access Token
-        env:
-          PAT: ${{ secrets.PAT_TOKEN }}
-        run: |
-          git add "artifacts"
-          git stash
-          git pull origin main || echo "Couldn't find remote branch"
-          git checkout stash -- .
-          git commit -m "Baseline File push from pipeline"
-          git push origin HEAD:main --force-with-lease
-        shell: bash
+      - name: Push changes
+        #if: startsWith(github.ref, 'refs/heads/release-') || github.ref == 'refs/heads/master'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.PAT_TOKEN }}
+          branch: ${{ github.ref }}
 
       
