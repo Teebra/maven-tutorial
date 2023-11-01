@@ -48,7 +48,5 @@ jobs:
           git commit -m "Baseline File push from pipeline"
           git push origin HEAD:main --force-with-lease
         shell: bash
-        env:
-          PAT: ${{ secrets.PAT_TOKEN }}
 
       
