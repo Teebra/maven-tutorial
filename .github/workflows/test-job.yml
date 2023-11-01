@@ -1,9 +1,10 @@
 name: Veracode Workflow
 on:
-  workflow_run:
-    workflows: ["SonarQube analysis"]
-    types:
-      - completed
+  # workflow_run:
+  #   workflows: ["SonarQube analysis"]
+  #   types:
+  #     - completed
+  workflow_dispatch:
 
 jobs:
   veracode:
