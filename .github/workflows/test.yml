@@ -23,8 +23,8 @@ jobs:
       
       # - name: Push changes
       #   run: |
-      #     git config --global user.name "teebra1"
-      #     git config --global user.email "teebrakanakdeka@yahoo.com"
+      #     git config --global user.name "sdfsdfs"
+      #     git config --global user.email "sdfsdfsf"
       #     git add "artifacts"
       #     git stash
       #     git pull origin main || echo "Couldn't find remote branch"
@@ -35,8 +35,8 @@ jobs:
       - name: Set up Git
         run: |
           if ! git diff --quiet; then
-            git config user.name teebra1
-            git config user.email teebrakanakdeka@yahoo.com
+            git config user.name sdfsdfsd
+            git config user.email sdfsdfsdfs
             git add .
             git commit -m "updated"
           else
