@@ -21,8 +21,10 @@ jobs:
           echo "test the loop" > test.txt
           cat test.txt
       
-      - name: Push changes
-        run: |
-          git push https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git main
+      - name: push
+        uses: ./actions/push-changes-without-triggering-workflow@v1
+        with:
+          branch: main
+          pat: ${{ secrets.GITHUB_TOKEN }}
 
       
