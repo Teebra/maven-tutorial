@@ -1,11 +1,8 @@
 name: MyTargetWorkflow
 
 on:
-  workflow_run:
-    workflows: ["TriggerWorkflow"]
-    types:
-      - completed
-
+  workflow_dispatch:
+  
 jobs:
   target:
     runs-on: ubuntu-latest
