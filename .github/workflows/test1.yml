@@ -2,11 +2,15 @@ name: MyTargetWorkflow
 
 # on: [workflow_dispatch]
 
+# on:
+#   workflow_run:
+#     workflows: ["TriggerWorkflow"]
+#     types:
+#       - completed
+
 on:
-  workflow_run:
-    workflows: ["TriggerWorkflow"]
-    types:
-      - completed
+  repository_dispatch:
+    types: [my-event]
 
 jobs:
   target:

@@ -34,7 +34,7 @@ jobs:
         if: success()
         uses: peter-evans/repository-dispatch@v2
         with:
-          workflow: MyTargetWorkflow
+          event-type: my-event
           token: ${{ secrets.PAT_TOKEN }}
           repository: ${{ github.repository }}
   gg:
