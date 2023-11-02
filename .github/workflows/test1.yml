@@ -5,7 +5,9 @@ on:
     workflows: ["TriggerWorkflow"]
     types:
       - completed
-    status: success
+
+needs:
+  - TriggerWorkflow
 
 jobs:
   target:
