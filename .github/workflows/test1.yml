@@ -5,14 +5,13 @@ on:
     workflows: ["TriggerWorkflow"]
     types:
       - completed
+    status: success
 
 jobs:
   target:
-    if: success('TriggerWorkflow')  # Add this condition
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run Target Job
         run: echo "This is the target job..."
-
