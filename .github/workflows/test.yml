@@ -44,6 +44,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build
-        run: #exit 1
+        run: echo test
 
 # This workflow file doesn't need to include the trigger for the next workflow
