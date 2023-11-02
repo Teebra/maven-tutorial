@@ -6,12 +6,10 @@ on:
     types:
       - completed
 
-needs:
-  - TriggerWorkflow
-
 jobs:
   target:
     runs-on: ubuntu-latest
+    needs: ["TriggerWorkflow"]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
