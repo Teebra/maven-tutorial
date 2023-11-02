@@ -36,6 +36,7 @@ jobs:
         with:
           workflow: MyTargetWorkflow
           token: ${{ secrets.PAT_TOKEN }}
+          repository: ${{ github.repository }}
   gg:
     runs-on: ubuntu-latest
     needs: [build, test]
