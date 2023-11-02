@@ -23,7 +23,7 @@ jobs:
       - name: Trigger deploy workflow
         uses: ./.github/workflows/test.yml
         with:
-          workflow_name: deMyTargetWorkflowploy
+          workflow_name: MyTargetWorkflow
   gg:
     runs-on: ubuntu-latest
     needs: [build, test]
