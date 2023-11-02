@@ -13,14 +13,15 @@ jobs:
         uses: actions/checkout@v2
       - name: Build
         run: echo "Building something..."
+  
   test:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Build
-        run: echo "Building something..."
+      - name: Invoke workflow without inputs
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: MyTargetWorkflow
   gg:
     runs-on: ubuntu-latest
     needs: [build, test]
