@@ -8,7 +8,7 @@ on:
 
 jobs:
   target:
-    if: success ('TriggerWorkflow')  # Add this condition
+    if: success('TriggerWorkflow')  # Add this condition
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
