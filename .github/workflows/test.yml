@@ -18,13 +18,12 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Another Workflow
-        uses: actions/github-script@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Trigger deploy workflow
+        uses: ./.github/workflows/test.yml
         with:
-          script: |
-            github.actions.createWorkflowDispatch({
-              workflow: 'MyTargetWorkflow',
-            });
+          workflow_name: deMyTargetWorkflowploy
   gg:
     runs-on: ubuntu-latest
     needs: [build, test]
