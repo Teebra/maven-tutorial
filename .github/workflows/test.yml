@@ -21,7 +21,7 @@ jobs:
       - name: Invoke workflow without inputs
         uses: benc-uk/workflow-dispatch@v1
         with:
-          workflow: MyTargetWorkflow
+          workflow: test1.yml
   gg:
     runs-on: ubuntu-latest
     needs: [build, test]
