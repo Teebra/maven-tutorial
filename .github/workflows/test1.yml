@@ -1,6 +1,12 @@
 name: MyTargetWorkflow
 
-on: [workflow_dispatch]
+# on: [workflow_dispatch]
+
+on:
+  workflow_run:
+    workflows: ["TriggerWorkflow"]
+    types:
+      - completed
 
 jobs:
   target:

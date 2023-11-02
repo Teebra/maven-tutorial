@@ -14,17 +14,27 @@ jobs:
       - name: Build
         run: echo "Building something..."
   
+  # test:
+  #   runs-on: ubuntu-latest
+  #   needs: [build]
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+  #     - name: Invoke workflow without inputs
+  #       uses: benc-uk/workflow-dispatch@v1
+  #       with:
+  #         workflow: test1.yml
+  #         token: ${{ secrets.PAT_TOKEN }}
+  
   test:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Invoke workflow without inputs
-        uses: benc-uk/workflow-dispatch@v1
+      - name: Trigger Workflow
+        if: success() # Only run if the build is successful
+        uses: peter-evans/workflow-dispatch@v1
         with:
-          workflow: test1.yml
-          token: ${{ secrets.PAT_TOKEN }} 
+          workflow: MyTargetWorkflow
   gg:
     runs-on: ubuntu-latest
     needs: [build, test]
