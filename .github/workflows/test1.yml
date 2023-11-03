@@ -16,20 +16,25 @@ jobs:
   target:
     runs-on: ubuntu-latest
     env:
-      PROJECT_NAME: echo "$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)"
-      RELEASE_VERSION: echo "$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec 2>/dev/null)"
-      BRANCH_NAME: echo "$(echo $GITHUB_REF_NAME)"
-      CURRENT_DATE_TIME: echo "$(date -u +%Y%m%d%H%M%S)"
-      BUILD_NUMBER: echo "${{ github.run_number }}"
+      PROJECT_NAME: ${{ format('{0}', split('/', github.repository) ) }}
+      RELEASE_VERSION: ${{ steps.version.outputs.version }}
+      BRANCH_NAME: ${{ github.ref }}
+      CURRENT_DATE_TIME: ${{ steps.timestamp.outputs.timestamp }}
+      BUILD_NUMBER: ${{ github.run_number }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run Target Job
         run: echo "This is the target job..."
-      - name: Upload HTML Table to Artifacts
-        uses: actions/upload-artifact@v3
+      - name: Upload to Artifacts
+        id: upload-artifacts
+        uses: actions/upload-artifact@v2
         with:
           name: test-results-${{ env.PROJECT_NAME }}-${{ env.BRANCH_NAME }}-${{ env.RELEASE_VERSION }}-${{ env.CURRENT_DATE_TIME }}-${{ env.BUILD_NUMBER }}
           path: |
             ./test.txt
+
+      - name: Set Outputs
+        id: set-outputs
+        run: echo "::set-output name=upload-url::${{ steps.upload-artifacts.outputs.artifact-upload-url }}"
       
