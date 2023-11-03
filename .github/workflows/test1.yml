@@ -1,6 +1,6 @@
 name: MyTargetWorkflow
 
-# on: [workflow_dispatch]
+on: [workflow_dispatch]
 
 # on:
 #   workflow_run:
@@ -8,9 +8,9 @@ name: MyTargetWorkflow
 #     types:
 #       - completed
 
-on:
-  repository_dispatch:
-    types: [my-event-*]
+# on:
+#   repository_dispatch:
+#     types: [my-event-*]
 
 jobs:
   set_env:
