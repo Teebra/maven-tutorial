@@ -16,12 +16,15 @@ jobs:
   target:
     runs-on: ubuntu-latest
     env:
-      PROJECT_NAME: ${{ format('{0}', split('/', github.repository) ) }}
+      PROJECT_NAME: ${{ steps.extract-repo-name.outputs.repo-name }}
       RELEASE_VERSION: ${{ steps.version.outputs.version }}
       BRANCH_NAME: ${{ github.ref }}
       CURRENT_DATE_TIME: ${{ steps.timestamp.outputs.timestamp }}
       BUILD_NUMBER: ${{ github.run_number }}
     steps:
+      - name: Extract Repository Name
+        id: extract-repo-name
+        run: echo "::set-output name=repo-name::$(basename -s .git ${{ github.repository }})"
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run Target Job
@@ -37,4 +40,5 @@ jobs:
       - name: Set Outputs
         id: set-outputs
         run: echo "::set-output name=upload-url::${{ steps.upload-artifacts.outputs.artifact-upload-url }}"
+
       
