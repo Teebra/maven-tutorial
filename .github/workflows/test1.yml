@@ -16,11 +16,11 @@ jobs:
   target:
     runs-on: ubuntu-latest
     env:
-      PROJECT_NAME: $(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)
-      RELEASE_VERSION: $(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec 2>/dev/null)
-      BRANCH_NAME: $(echo $GITHUB_REF_NAME)
-      CURRENT_DATE_TIME: $(date -u +%Y%m%d%H%M%S)
-      BUILD_NUMBER: ${{ github.run_number }}
+      PROJECT_NAME: echo "$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)"
+      RELEASE_VERSION: echo "$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec 2>/dev/null)"
+      BRANCH_NAME: echo "$(echo $GITHUB_REF_NAME)"
+      CURRENT_DATE_TIME: echo "$(date -u +%Y%m%d%H%M%S)"
+      BUILD_NUMBER: echo "${{ github.run_number }}"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
