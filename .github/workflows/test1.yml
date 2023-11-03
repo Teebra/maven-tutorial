@@ -10,7 +10,7 @@ name: MyTargetWorkflow
 
 on:
   repository_dispatch:
-    types: [my-event]
+    types: [my-event-*]
 
 jobs:
   set_env:
@@ -20,8 +20,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set Docker Tags
-        id: set_env
+      - name: Set Tags
         run: |
             echo "PROJECT_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
             echo "RELEASE_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec 2>/dev/null)" >> $GITHUB_ENV
@@ -29,14 +28,14 @@ jobs:
             echo "CURRENT_DATE_TIME=$(date -u +%Y%m%d%H%M%S)" >> $GITHUB_ENV
             echo BUILD_NUMBER="${{ github.run_number }}" >> $GITHUB_ENV
       
-      # - name: Creating Major TAGs
-      #   id: set_env
-      #   run: |
-      #       echo PROJECT_NAME=${{ env.PROJECT_NAME }} >> $GITHUB_OUTPUT
-      #       echo RELEASE_VERSION=${{ env.RELEASE_VERSION }} >> $GITHUB_OUTPUT
-      #       echo BRANCH_NAME=${{ env.BRANCH_NAME }} >> $GITHUB_OUTPUT
-      #       echo CURRENT_DATE_TIME=${{ env.CURRENT_DATE_TIME }} >> $GITHUB_OUTPUT
-      #       echo BUILD_NUMBER=${{env.BUILD_NUMBER }} >> $GITHUB_OUTPUT
+      - name: Creating Major TAGs
+        id: set_env
+        run: |
+            echo PROJECT_NAME=${{ env.PROJECT_NAME }} >> $GITHUB_OUTPUT
+            echo RELEASE_VERSION=${{ env.RELEASE_VERSION }} >> $GITHUB_OUTPUT
+            echo BRANCH_NAME=${{ env.BRANCH_NAME }} >> $GITHUB_OUTPUT
+            echo CURRENT_DATE_TIME=${{ env.CURRENT_DATE_TIME }} >> $GITHUB_OUTPUT
+            echo BUILD_NUMBER=${{env.BUILD_NUMBER }} >> $GITHUB_OUTPUT
     outputs:
       PROJECT_NAME: ${{ steps.set_env.outputs.PROJECT_NAME }}
       RELEASE_VERSION: ${{ steps.set_env.outputs.RELEASE_VERSION }}

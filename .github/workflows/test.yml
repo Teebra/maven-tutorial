@@ -35,7 +35,7 @@ jobs:
         if: success()
         uses: peter-evans/repository-dispatch@v2
         with:
-          event-type: my-event
+          event-type: my-event-${{ github.run_number }}
           token: ${{ secrets.PAT_TOKEN }}
           #repository: ${{ github.repository }}
   gg:
