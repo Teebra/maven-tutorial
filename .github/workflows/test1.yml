@@ -15,8 +15,21 @@ on:
 jobs:
   target:
     runs-on: ubuntu-latest
+    env:
+      PROJECT_NAME: $(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)
+      RELEASE_VERSION: $(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec 2>/dev/null)
+      BRANCH_NAME: $(echo $GITHUB_REF_NAME)
+      CURRENT_DATE_TIME: $(date -u +%Y%m%d%H%M%S)
+      BUILD_NUMBER: ${{ github.run_number }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run Target Job
         run: echo "This is the target job..."
+      - name: Upload HTML Table to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results-${{ env.PROJECT_NAME }}-${{ env.BRANCH_NAME }}-${{ env.RELEASE_VERSION }}-${{ env.CURRENT_DATE_TIME }}-${{ env.BUILD_NUMBER }}
+          path: |
+            ./test.txt
+      
