@@ -23,12 +23,10 @@ jobs:
       - name: Set Tags
         run: |
             echo "PROJECT_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+            echo "RELEASE_VERSION=$(./ mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec 2>/dev/null)" >> $GITHUB_ENV
             echo "BRANCH_NAME=$(echo $GITHUB_REF_NAME)" >> $GITHUB_ENV
             echo "CURRENT_DATE_TIME=$(date -u +%Y%m%d%H%M%S)" >> $GITHUB_ENV
             echo BUILD_NUMBER="${{ github.run_number }}" >> $GITHUB_ENV
-            cd artifact
-            echo "RELEASE_VERSION=$(./ mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec 2>/dev/null)" >> $GITHUB_ENV
-
       
       - name: Creating Major TAGs
         id: set_env
