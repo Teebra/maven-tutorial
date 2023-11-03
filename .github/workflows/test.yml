@@ -32,7 +32,6 @@ jobs:
     #if: github.event_name == 'pull_request'
     steps:
       - name: Trigger Workflow
-        if: success()
         uses: peter-evans/repository-dispatch@v2
         with:
           event-type: my-event-${{ github.run_number }}
