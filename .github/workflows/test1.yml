@@ -44,6 +44,7 @@ jobs:
 
   target:
     runs-on: ubuntu-latest
+    needs: [set_env]
     env:
       PROJECT_NAME: ${{ needs.set_env.outputs.PROJECT_NAME }}
       RELEASE_VERSION: ${{ needs.set_env.outputs.RELEASE_VERSION }}
@@ -51,9 +52,6 @@ jobs:
       CURRENT_DATE_TIME: ${{ needs.set_env.outputs.CURRENT_DATE_TIME }}
       BUILD_NUMBER: ${{ needs.set_env.outputs.BUILD_NUMBER }}
     steps:
-      - name: Extract Repository Name
-        id: extract-repo-name
-        run: echo "::set-output name=repo-name::$(basename -s .git ${{ github.repository }})"
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run Target Job
