@@ -27,7 +27,7 @@ jobs:
   
   test:
     runs-on: ubuntu-latest
-    if: (github.ref == 'refs/heads/release-*.0') == true || github.ref == 'refs/heads/master'
+    if: (github.ref == 'refs/heads/release-*') == true || github.ref == 'refs/heads/master'
     needs: [build]
     steps:
       - name: Checkout code
