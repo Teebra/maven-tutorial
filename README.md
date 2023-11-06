@@ -1,1 +1,1 @@
-# maven-tutorial 1
+# maven-tutorial 2
