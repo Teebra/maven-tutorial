@@ -27,6 +27,7 @@ jobs:
   
   test:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/release-*.0' || github.ref == 'refs/heads/master'
     needs: [build]
     steps:
       - name: Checkout code
@@ -50,7 +51,6 @@ jobs:
   #         #repository: ${{ github.repository }}
   gg:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.ref == 'refs/heads/release-*.0' || github.ref == 'refs/heads/master'
     needs: [build, test]
     steps:
       - name: Checkout code
