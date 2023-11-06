@@ -50,6 +50,7 @@ jobs:
   #         #repository: ${{ github.repository }}
   gg:
     runs-on: ubuntu-latest
+    github.event_name == 'pull_request' && github.ref == 'refs/heads/release-*.0' || github.ref == 'refs/heads/master')
     needs: [build, test]
     steps:
       - name: Checkout code
