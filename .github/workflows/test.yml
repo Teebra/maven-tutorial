@@ -27,7 +27,7 @@ jobs:
   
   test:
     runs-on: ubuntu-latest
-    if: ((startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == true || github.ref == 'refs/heads/master')
+    if: ((startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == true || github.ref == 'refs/heads/main')
     needs: [build]
     steps:
       - name: Checkout code
