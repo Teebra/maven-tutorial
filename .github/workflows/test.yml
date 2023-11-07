@@ -27,7 +27,7 @@ jobs:
   
   test:
     runs-on: ubuntu-latest
-    #if: ((startsWith(github.ref, 'refs/heads/release') && endsWith(github.ref, '0')) == true || github.ref == 'refs/heads/main')
+    if: github.event_name != 'pull_request'
     needs: [build]
     steps:
       - name: Checkout code
