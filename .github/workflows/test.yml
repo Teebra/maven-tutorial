@@ -5,16 +5,18 @@ name: TriggerWorkflow
 #     branches:
 #       - main
 
-on:
-  push:
-    branches:
-      - '*'
-      # - '!main'
-      # - '!release-*.0'
-  pull_request:
-    branches: 
-      - 'main'
-      - 'release-*.0'
+# on:
+#   push:
+#     branches:
+#       - '*'
+#       # - '!main'
+#       # - '!release-*.0'
+#   pull_request:
+#     branches: 
+#       - 'main'
+#       - 'release-*.0'
+
+on: [workflow_dispatch]
 
 jobs:
   build:

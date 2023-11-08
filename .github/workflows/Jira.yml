@@ -1,0 +1,45 @@
+name: Extract Jira Issue Numbers
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  extract-jira-issues:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Get previous and current tags
+        run: |
+          previousTag=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))
+          currentTag=$(git tag --sort=committerdate | grep -E '[0-9]' | tail -1)
+          echo "Previous tag: $previousTag"
+          echo "Current tag: $currentTag"
+        id: get-tags
+
+      - name: Get Jira issue numbers
+        run: |
+          previousTag="${{ steps.get-tags.outputs.previousTag }}"
+          currentTag="${{ steps.get-tags.outputs.currentTag }}"
+          if [[ $currentTag == *"RELEASE"* ]]; then
+            git fetch
+            commits=$(git log --pretty=%s $previousTag..$currentTag --grep='Pull request')
+          else
+            commits=$(git log --pretty=%s $previousTag..$currentTag)
+          fi
+          jiraNumbers=$(echo "$commits" | grep -o 'LM-[0-9]*')
+          echo "::set-output name=jiraNumbers::$jiraNumbers"
+        id: get-jira-issues
+
+      - name: Display Jira issue numbers
+        run: |
+          jiraNumbers="${{ steps.get-jira-issues.outputs.jiraNumbers }}"
+          if [ -z "$jiraNumbers" ]; then
+            echo "No Jira issue numbers were found in the commits."
+          else
+            echo "Jira issue numbers: $jiraNumbers"
+          fi
