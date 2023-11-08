@@ -31,6 +31,6 @@ jobs:
         echo "::set-output name=commits::$(git log --oneline ${{ steps.previous_release.outputs.previous_tag }}..${{ steps.latest_release.outputs.latest_tag }})"
 
     - name: Display commits
-      run: echo "Commits between releases: ${{ steps.list_commits.outputs.commits }}"
+      run: echo "Commits between releases ${{ steps.list_commits.outputs.commits }}"
 
 
