@@ -11,7 +11,7 @@ jobs:
 
       - name: Get current release tag
         id: get-current-tag
-        run: echo "Current release tag: $(git tag --sort=version:refname | tail -n 1)"
+        run: echo "Current release tag $(git tag --sort=version:refname | tail -n 1)"
 
       - name: Get previous release tag
         id: get-previous-tag
