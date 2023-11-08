@@ -3,25 +3,27 @@ name: Get Commits Between Releases
 on: [workflow_dispatch]
 
 jobs:
-  get-release-tags:
+  get-tags-and-commits:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
 
       - name: Get current release tag
-        id: current-release-tag
-        run: |
-          echo "Current release tag: $(git describe --tags | sort -V | tail -n 1)"
+        id: get-current-tag
+        run: echo "Current release tag: $(git tag --sort=version:refname | tail -n 1)"
 
       - name: Get previous release tag
-        id: previous-release-tag
+        id: get-previous-tag
         run: |
-          echo "Previous release tag: $(git describe --abbrev=0 --tags | sort -V | tail -n 2 | head -n 1)"
+          current_tag=$(git tag --sort=version:refname | tail -n 1)
+          previous_tag=$(git rev-parse $current_tag^1)
+          echo "Previous release tag: $previous_tag"
 
       - name: Get commits between current and previous release tag
-        id: commits-between-release-tags
+        id: get-commits
         run: |
-          echo "Commits between current and previous release tag:"
-          git log $(previous-release-tag)..$(current-release-tag)
+          current_tag=$(git tag --sort=version:refname | tail -n 1)
+          previous_tag=$(git rev-parse $current_tag^1)
+          git log $previous_tag..$current_tag
 
