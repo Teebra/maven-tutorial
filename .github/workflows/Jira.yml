@@ -3,34 +3,25 @@ name: Get Commits Between Releases
 on: [workflow_dispatch]
 
 jobs:
-  get-commits:
+  get-release-tags:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-    - name: Get the latest release tag
-      id: latest_release
-      run: |
-        latest_tag=$(git describe --tags --abbrev=0)
-        echo "Latest release tag: $latest_tag"
-        echo "::set-output name=latest_tag::$latest_tag"
+      - name: Get current release tag
+        id: current-release-tag
+        run: |
+          echo "Current release tag: $(git describe --tags | sort -V | tail -n 1)"
 
-    - name: Get the previous release tag
-      id: previous_release
-      run: |
-        previous_tag=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 --max-count=1))
-        echo "Previous release tag: $previous_tag"
-        echo "::set-output name=previous_tag::$previous_tag"
+      - name: Get previous release tag
+        id: previous-release-tag
+        run: |
+          echo "Previous release tag: $(git describe --abbrev=0 --tags | sort -V | tail -n 2 | head -n 1)"
 
-    - name: List commits between releases
-      id: list_commits
-      run: |
-        git log --oneline ${{ steps.previous_release.outputs.previous_tag }}..${{ steps.latest_release.outputs.latest_tag }}
-        echo "::set-output name=commits::$(git log --oneline ${{ steps.previous_release.outputs.previous_tag }}..${{ steps.latest_release.outputs.latest_tag }})"
-
-    - name: Display commits
-      run: echo "Commits between releases ${{ steps.list_commits.outputs.commits }}"
-
+      - name: Get commits between current and previous release tag
+        id: commits-between-release-tags
+        run: |
+          echo "Commits between current and previous release tag:"
+          git log $(previous-release-tag)..$(current-release-tag)
 
