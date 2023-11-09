@@ -7,24 +7,18 @@ on:
       - main
 
 jobs:
-  release:
+  get_tags:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Get current tag commit hash
-      id: current_tag
-      run: echo "::set-output name=commit::$(git rev-list -n 1 Release-1.6.0.0)"
+    - name: Get all tags
+      id: get_tags
+      run: echo "::set-output name=tags::$(git tag -l)"
 
-    - name: Get previous tag commit hash
-      id: previous_tag
-      run: echo "::set-output name=commit::$(git rev-list -n 1 Release-1.5.0.0)"
-
-    - name: List commits between tags
+    - name: Display tags
       run: |
-        current_commit="${{ steps.current_tag.outputs.commit }}"
-        previous_commit="${{ steps.previous_tag.outputs.commit }}"
-        
-        git log --pretty=format:"%h - %an, %ar : %s" $previous_commit..$current_commit
+        tags="${{ steps.get_tags.outputs.tags }}"
+        echo "Available tags: $tags"
