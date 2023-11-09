@@ -16,16 +16,25 @@ jobs:
     - name: List Tags
       run: |
         git fetch --tags
-    - name: tag
-      run: git tag
-    
-    - name: get current and pervious tags
-      run: |
+        git tag
+        
         current_tag=$(git describe --tags --abbrev=0)
         previous_tag=$(git describe --tags --abbrev=0 $current_tag^)
 
         echo "Current tag: $current_tag"
         echo "Previous tag: $previous_tag"
+
+
+    # - name: tag
+    #   run: git tag
+    
+    # - name: get current and pervious tags
+    #   run: |
+    #     current_tag=$(git describe --tags --abbrev=0)
+    #     previous_tag=$(git describe --tags --abbrev=0 $current_tag^)
+
+    #     echo "Current tag: $current_tag"
+    #     echo "Previous tag: $previous_tag"
 
 
 
