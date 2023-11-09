@@ -2,7 +2,8 @@ name: Get Current and Previous Tags
 
 on:
   push:
-    - '*'
+    branches:
+      - main
 
 jobs:
   get-tags:
