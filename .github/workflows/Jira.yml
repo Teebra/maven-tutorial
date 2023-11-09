@@ -14,17 +14,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Get current tag
-        id: current_tag
-        run: echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
-
-      - name: Get previous tag
-        id: previous_tag
-        run: echo "::set-output name=tag::$(git describe --tags --abbrev=0 HEAD^)"
-
       - name: List commits between tags
         run: |
-          current_tag="${{ steps.current_tag.outputs.tag }}"
-          previous_tag="${{ steps.previous_tag.outputs.tag }}"
+          current_tag="Release-1.6.0.0"
+          previous_tag="Release-1.5.0.0"
           
           git log --pretty=format:"%h - %an, %ar : %s" $previous_tag..$current_tag
