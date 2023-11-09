@@ -1,24 +1,34 @@
-name: Get Commits Between Releases
+name: Get Current and Previous Tags
 
-#on: [workflow_dispatch]
 on:
   push:
-    branches:
-      - main
+    tags:
+      - '*'
 
 jobs:
-  get_tags:
+  get-tags:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Fetch tags
+        run: git fetch -a
 
-    - name: Get all tags
-      id: get_tags
-      run: echo "::set-output name=tags::$(git tag -l)"
+      - name: Get current tag
+        id: current-tag
+        run: echo "Current tag: $(git describe --tags)"
+      
+      - name: Get previous tag
+        id: previous-tag
+        run: |
+          previous_commit=$(git rev-list --tags --max-count=1 ^HEAD)
+          previous_tag=$(git describe --tags --exact-match $previous_commit)
+          echo "Previous tag: $previous_tag"
+      
+      - name: Display tags
+        run: echo "Current tag ${{ steps.current-tag.outputs.tag }}"
+        run: echo "Previous tag ${{ steps.previous-tag.outputs.tag }}"
 
-    - name: Display tags
-      run: |
-        tags="${{ steps.get_tags.outputs.tags }}"
-        echo "Available tags: $tags"
+
+
