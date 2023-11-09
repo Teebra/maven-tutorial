@@ -19,6 +19,22 @@ jobs:
     - name: tag
       run: git tag
     
+    - name: Get current version
+      id: current-version
+      run: echo "Current version $(git describe)"
+    
+    - name: Get current tag
+      id: current-tag
+      run: echo "Current tag: $(git describe --tags)"
+    
+    - name: Display version and tag
+      run: |
+        echo "Current version: ${{ steps.current-version.outputs.version }}"
+        echo "Current tag: ${{ steps.current-tag.outputs.tag }}"
+
+
+
+    
     # - name: get current and pervious tags
     #   run: |
     #     current_tag=$(git describe --tags --abbrev=0)
