@@ -11,12 +11,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: List commits between tags
-        run: |
-          current_tag="Release-1.6.0.0"
-          previous_tag="Release-1.5.0.0"
-          
-          git log --pretty=format:"%h - %an, %ar : %s" $previous_tag..$current_tag
+    - name: Get current tag commit hash
+      id: current_tag
+      run: echo "::set-output name=commit::$(git rev-list -n 1 Release-1.6.0.0)"
+
+    - name: Get previous tag commit hash
+      id: previous_tag
+      run: echo "::set-output name=commit::$(git rev-list -n 1 Release-1.5.0.0)"
+
+    - name: List commits between tags
+      run: |
+        current_commit="${{ steps.current_tag.outputs.commit }}"
+        previous_commit="${{ steps.previous_tag.outputs.commit }}"
+        
+        git log --pretty=format:"%h - %an, %ar : %s" $previous_commit..$current_commit
