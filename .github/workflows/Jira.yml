@@ -21,10 +21,11 @@ jobs:
         echo "Get current and previous tags"
 
         current_tag=$(git describe --tags --abbrev=0)
-        previous_tag=$(git describe --tags --abbrev=0 $current_tag^{} 2>/dev/null || echo "No previous tag")
+        previous_tag=$(git rev-list $current_tag^..$current_tag --tags | tail -n 1)
 
         echo "Current tag: $current_tag"
         echo "Previous tag: $previous_tag"
+
 
 
 
