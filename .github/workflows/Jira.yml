@@ -27,8 +27,9 @@ jobs:
           echo "Previous tag: $previous_tag"
       
       - name: Display tags
-        run: echo "Current tag ${{ steps.current-tag.outputs.tag }}"
-        run: echo "Previous tag ${{ steps.previous-tag.outputs.tag }}"
+        run: |
+          echo "Current tag ${{ steps.current-tag.outputs.tag }}"
+          echo "Previous tag ${{ steps.previous-tag.outputs.tag }}"
 
 
 
