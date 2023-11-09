@@ -2,8 +2,7 @@ name: Get Current and Previous Tags
 
 on:
   push:
-    tags:
-      - '*'
+    - '*'
 
 jobs:
   get-tags:
@@ -17,7 +16,7 @@ jobs:
 
       - name: Get current tag
         id: current-tag
-        run: echo "Current tag: $(git describe --tags)"
+        run: echo "Current tag $(git describe --tags)"
       
       - name: Get previous tag
         id: previous-tag
