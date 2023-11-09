@@ -1,4 +1,4 @@
-name: Get Current and Previous Tags
+name: List Tags
 
 on:
   push:
@@ -6,27 +6,12 @@ on:
       - main
 
 jobs:
-  get-tags:
+  list-tags:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: Fetch tags
-        uses: WyriHaximus/github-action-fetch-tags@v1
-
-      - name: Get current tag
-        id: current-tag
-        run: echo "Current tag $(git describe --tags)"
-
-      - name: Get previous tag
-        id: previous-tag
-        run: |
-          previous_commit=$(git rev-list --tags --max-count=1 ^HEAD)
-          previous_tag=$(git describe --tags --exact-match $previous_commit)
-          echo "Previous tag: $previous_tag"
-
-      - name: Display tags
-        run: |
-          echo "Current tag ${{ steps.current-tag.outputs.tag }}"
-          echo "Previous tag ${{ steps.previous-tag.outputs.tag }}"
+    - name: List Tags
+      run: git tag -l
