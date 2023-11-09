@@ -1,4 +1,4 @@
-name: List Tags
+name: Get Tags
 
 on:
   push:
@@ -6,40 +6,30 @@ on:
       - main
 
 jobs:
-  list-tags:
+  get-tags:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: List Tags
+    - name: Get Current Tag
       run: |
-        git fetch --tags
-        git tag
+        currentTag=$(git tag --sort=committerdate | grep -E '[0-9]' | tail -1)
+        echo "Current tag: $currentTag"
+        echo "::set-output name=currentTag::$currentTag"
 
-        echo "Get current and previous tags"
+    - name: Get Previous Tag
+      id: get-previous-tag
+      run: |
+        currentTag=${{ steps.get-current-tag.outputs.currentTag }}
+        previousTag=$(git describe --tags --abbrev=0 $currentTag^)
+        echo "Previous tag: $previousTag"
+        echo "::set-output name=previousTag::$previousTag"
 
-        current_tag=$(git describe --tags --abbrev=0)
-        previous_tag=$(git rev-list $current_tag^..$current_tag --tags | tail -n 1)
-
-        echo "Current tag: $current_tag"
-        echo "Previous tag: $previous_tag"
-
-
-
-
-
-    # - name: tag
-    #   run: git tag
-    
-    # - name: get current and pervious tags
-    #   run: |
-    #     current_tag=$(git describe --tags --abbrev=0)
-    #     previous_tag=$(git describe --tags --abbrev=0 $current_tag^)
-
-    #     echo "Current tag: $current_tag"
-    #     echo "Previous tag: $previous_tag"
-
-
-
+    - name: Use Tags in Subsequent Steps
+      run: |
+        currentTag=${{ steps.get-previous-tag.outputs.currentTag }}
+        previousTag=${{ steps.get-previous-tag.outputs.previousTag }}
+        echo "Current tag: $currentTag"
+        echo "Previous tag: $previousTag"
