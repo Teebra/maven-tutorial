@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - '**'
+env:
+  REGISTRY: "teebra2.jfrog.io"
 
 jobs:
-  build_and_push:
+  build:
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -40,3 +42,18 @@ jobs:
           path: |
             jar_archive.zip
           retention-days: 30
+  
+  upload_artifact:
+    name: Upload LYNX Artifact
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Login to Jfrog
+        uses: jfrog/setup-jfrog-cli@v3
+        env:
+          JF_URL: https://${{ env.REGISTRY }}
+          JF_USER: ${{ secrets.JFROG_USERNAME }}
+          JF_PASSWORD: ${{ secrets.JFROG_API_KEY }}
+      
+      - name: Upload Artifact to Artifactory
+        run: |
