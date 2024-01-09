@@ -38,7 +38,7 @@ jobs:
             -DartifactId=maven-tutorial \
             -Dversion=1.0-SNAPSHOT \
             -Dpackaging=jar \
-            -Dfile=maven-target/tutorial-1.0-SNAPSHOT.jar \
+            -Dfile=target/maven-tutorial-1.0-SNAPSHOT.jar \
             -DrepositoryId=maven-repo-libs-snapshot-local \
             -Durl=https://teebra2.jfrog.io/artifactory/maven-repo-libs-snapshot-local
 
