@@ -77,4 +77,4 @@ jobs:
             -Dpackaging=jar \
             -Dfile=target/maven-tutorial-1.0-SNAPSHOT.jar \
             -DrepositoryId=snapshotRepository \
-            -Durl=https://teebra2.jfrog.io/artifactory/maven-repo-libs-snapshot
+            -Durl=https://teebra2.jfrog.io/artifactory/maven-repo-libs-snapshot 
