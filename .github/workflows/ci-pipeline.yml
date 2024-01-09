@@ -57,3 +57,10 @@ jobs:
       
       - name: Upload Artifact to Artifactory
         run: |
+          mvn deploy:deploy-file -DgroupId=com.jetbrains.marco \
+            -DartifactId=maven-tutorial \
+            -Dversion=1.0-SNAPSHOT \
+            -Dpackaging=jar \
+            -Dfile=target/maven-tutorial-1.0-SNAPSHOT.jar \
+            -DrepositoryId=snapshotRepository \
+            -Durl=https://teebra2.jfrog.io/artifactory/maven-repo-libs-snapshot
