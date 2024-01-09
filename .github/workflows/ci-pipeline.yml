@@ -34,11 +34,12 @@ jobs:
       
       - name: Upload Artifact to Artifactory
         run: |
+          JAR_FILE=$(find target -name "*.jar" -type f)
           mvn deploy:deploy-file -DgroupId=com.jetbrains.marco \
             -DartifactId=maven-tutorial \
-            -Dversion=2.0-SNAPSHOT \
+            -Dversion=3.0-SNAPSHOT \
             -Dpackaging=jar \
-            -Dfile=target/maven-tutorial-2.0-SNAPSHOT.jar \
+            -Dfile=$JAR_FILE \
             -DrepositoryId=maven-repo-libs-snapshot-local \
             -Durl=https://:${{ secrets.JFROG_API_KEY }}@teebra2.jfrog.io/artifactory/maven-repo-libs-snapshot-local
 
