@@ -46,7 +46,7 @@ jobs:
   
   upload_artifact:
     name: Upload Artifact
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
     needs: [build]
     steps:
       - name: Checkout repository
