@@ -24,6 +24,23 @@ jobs:
       - name: Build with Maven
         run: |
           mvn clean install
+      
+      - name: Login to Jfrog
+        uses: jfrog/setup-jfrog-cli@v3
+        env:
+          JF_URL: https://${{ env.REGISTRY }}
+          JF_USER: ${{ secrets.JFROG_USERNAME }}
+          JF_PASSWORD: ${{ secrets.JFROG_API_KEY }}
+      
+      - name: Upload Artifact to Artifactory
+        run: |
+          mvn deploy:deploy-file -DgroupId=com.jetbrains.marco \
+            -DartifactId=maven-tutorial \
+            -Dversion=1.0-SNAPSHOT \
+            -Dpackaging=jar \
+            -Dfile=target/maven-tutorial-1.0-SNAPSHOT.jar \
+            -DrepositoryId=snapshots \
+            -Durl=https://teebra2.jfrog.io/artifactory/maven-repo-libs-snapshot 
 
       - name: check
         run: |
@@ -44,37 +61,37 @@ jobs:
             jar_archive.zip
           retention-days: 30
   
-  upload_artifact:
-    name: Upload Artifact
-    runs-on: ubuntu-latest 
-    needs: [build]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+  # upload_artifact:
+  #   name: Upload Artifact
+  #   runs-on: ubuntu-latest 
+  #   needs: [build]
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
 
-      - name: Download Mavne Package from Build Job
-        uses: actions/download-artifact@v2
-        with:
-          name: jar_package
+  #     - name: Download Mavne Package from Build Job
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: jar_package
       
-      - name: check
-        run: |
-          ls
-          unzip jar_archive.zip
+  #     - name: check
+  #       run: |
+  #         ls
+  #         unzip jar_archive.zip
 
-      - name: Login to Jfrog
-        uses: jfrog/setup-jfrog-cli@v3
-        env:
-          JF_URL: https://${{ env.REGISTRY }}
-          JF_USER: ${{ secrets.JFROG_USERNAME }}
-          JF_PASSWORD: ${{ secrets.JFROG_API_KEY }}
+  #     - name: Login to Jfrog
+  #       uses: jfrog/setup-jfrog-cli@v3
+  #       env:
+  #         JF_URL: https://${{ env.REGISTRY }}
+  #         JF_USER: ${{ secrets.JFROG_USERNAME }}
+  #         JF_PASSWORD: ${{ secrets.JFROG_API_KEY }}
       
-      - name: Upload Artifact to Artifactory
-        run: |
-          mvn deploy:deploy-file -DgroupId=com.jetbrains.marco \
-            -DartifactId=maven-tutorial \
-            -Dversion=1.0-SNAPSHOT \
-            -Dpackaging=jar \
-            -Dfile=target/maven-tutorial-1.0-SNAPSHOT.jar \
-            -DrepositoryId=snapshots \
-            -Durl=https://teebra2.jfrog.io/artifactory/maven-repo-libs-snapshot 
+  #     - name: Upload Artifact to Artifactory
+  #       run: |
+  #         mvn deploy:deploy-file -DgroupId=com.jetbrains.marco \
+  #           -DartifactId=maven-tutorial \
+  #           -Dversion=1.0-SNAPSHOT \
+  #           -Dpackaging=jar \
+  #           -Dfile=target/maven-tutorial-1.0-SNAPSHOT.jar \
+  #           -DrepositoryId=snapshots \
+  #           -Durl=https://teebra2.jfrog.io/artifactory/maven-repo-libs-snapshot 
