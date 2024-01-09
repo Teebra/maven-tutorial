@@ -15,6 +15,14 @@
         <junit.version>5.8.2</junit.version>
     </properties>
 
+    <distributionManagement>
+    <snapshotRepository>
+        <id>snapshots</id>
+        <name>a0tqb33nvytgz-artifactory-primary-0-snapshots</name>
+        <url>https://teebra2.jfrog.io/artifactory/maven-repo-libs-snapshot</url>
+    </snapshotRepository>
+    </distributionManagement>
+
     <build>
         <plugins>
             <plugin>
