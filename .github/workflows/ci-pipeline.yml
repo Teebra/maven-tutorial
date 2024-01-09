@@ -1,9 +1,10 @@
-name: Final_CI_Pipeline
+name: Ci-pipeline
 
 on:
   push:
     branches:
       - '**'
+
 env:
   REGISTRY: "teebra2.jfrog.io"
 
@@ -23,18 +24,18 @@ jobs:
       - name: Build with Maven
         run: |
           mvn clean install
-      
+
       - name: check
         run: |
           ls
           cd target
           ls
           cd ..
-      
+
       - name: Zip
         run: |
           zip -r jar_archive.zip target
-      
+
       - name: Archive Maven Package
         uses: actions/upload-artifact@v3
         with:
