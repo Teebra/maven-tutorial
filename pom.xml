@@ -19,7 +19,7 @@
     <snapshotRepository>
         <id>snapshots</id>
         <name>a0tqb33nvytgz-artifactory-primary-0-snapshots</name>
-        <url>https://teebra2.jfrog.io/artifactory/maven-repo-libs-snapshot</url>
+        <url>https://teebra2.jfrog.io/artifactory/maven-repo-libs-snapshot-local</url>
     </snapshotRepository>
     </distributionManagement>
 
