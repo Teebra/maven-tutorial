@@ -38,7 +38,7 @@ jobs:
             -DartifactId=maven-tutorial \
             -Dversion=2.0-SNAPSHOT \
             -Dpackaging=jar \
-            -Dfile=target/*.jar \
+            -Dfile=target/maven-tutorial-2.0-SNAPSHOT.jar \
             -DrepositoryId=maven-repo-libs-snapshot-local \
             -Durl=https://:${{ secrets.JFROG_API_KEY }}@teebra2.jfrog.io/artifactory/maven-repo-libs-snapshot-local
 
