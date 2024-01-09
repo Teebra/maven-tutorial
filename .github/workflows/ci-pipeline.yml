@@ -36,7 +36,7 @@ jobs:
         run: |
           mvn deploy:deploy-file -DgroupId=com.jetbrains.marco \
             -DartifactId=maven-tutorial \
-            -Dversion=1.0-SNAPSHOT \
+            -Dversion=1.0-20240109.184751-1 \
             -Dpackaging=jar \
             -Dfile=target/maven-tutorial-1.0-SNAPSHOT.jar \
             -DrepositoryId=snapshots \
