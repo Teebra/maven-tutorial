@@ -1,9 +1,7 @@
 name: List Tags
 
-on:
-  push:
-    branches:
-      - main
+on: [workflow_dispatch]
+
 
 jobs:
   list-tags:
