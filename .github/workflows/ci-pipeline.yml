@@ -34,8 +34,7 @@ jobs:
       
       - name: upload artifacts
         run: |
-          cd target
-          jfrog rt u "*.jar" maven-repo-libs-snapshot-local/com/jetbrains/marco/maven-tutorial/5.0-SNAPSHOT/
+          jfrog rt u "target/*.jar" maven-repo-libs-snapshot-local/com/jetbrains/marco/maven-tutorial/6.0-SNAPSHOT/
 
       # - name: Upload Artifact to Artifactory
       #   run: |
